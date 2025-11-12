@@ -197,7 +197,7 @@ def show_birthday(args, book: AddressBook):
     
 def get_upcoming_birthdays(book: AddressBook):
     today = datetime.today().date()
-    upcoming = {}
+    upcoming = []
 
     for record in book.data.values():
         if not record.birthday:
@@ -213,8 +213,8 @@ def get_upcoming_birthdays(book: AddressBook):
         days_until_birthday = (bday_this_year - today).days
 
         if 0 <= days_until_birthday < 7:
-            weekday = bday_this_year.strftime("%A")                     # adding a week day when the upcoming birthday is (Monday, Tuesday ...)
-            upcoming.setdefault(weekday, []).append(record.name.value)  # addinf everething to dictionary 
+            date_str = bday_this_year.strftime("%d.%m.%Y")
+            upcoming.append(f"On {date_str} is {record.name.value} birthday")  # add birthday date and name to list 
 
     return upcoming
     
@@ -248,19 +248,15 @@ def main():
 
         elif command == "all":
             print(show_all(book))
-            pass
 
         elif command == "add-birthday":
             print(add_birthday(args, book))
-            pass
 
         elif command == "show-birthday":
             print(show_birthday(args, book))
-            pass
 
         elif command == "birthdays":
-            # реалізація
-            pass
+            print(get_upcoming_birthdays(book))
 
         else:
             print("Invalid command.")
